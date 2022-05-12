@@ -11,7 +11,8 @@ class VeebzAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: const Text('VEEBZ', style: TextStyle(fontFamily: 'Mulish')),
+      title: const Text('VEEBZ',
+          style: TextStyle(fontFamily: 'Mulish', fontSize: 30.0)),
     );
   }
 }

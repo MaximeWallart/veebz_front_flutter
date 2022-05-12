@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:veebz_front_flutter/views/profile_view.dart';
 
 void main() {
