@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:veebz_front_flutter/widgets/profile_interests_widget.dart';
 import 'package:veebz_front_flutter/widgets/profile_picture.dart';
 import 'package:veebz_front_flutter/widgets/veebz_appbar.dart';
 
@@ -41,7 +42,32 @@ class _ProfileViewState extends State<ProfileView> {
                       ])),
               child: Center(
                   child: SafeArea(
-                child: Column(children: const [ProfilePicture()]),
+                child: Column(children: [
+                  const ProfileInterestsWidget(),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 2,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                          begin: FractionalOffset.centerLeft,
+                          end: FractionalOffset.centerRight,
+                          colors: [
+                            Color(0xFFA5C0EE),
+                            Color(0xFFF5C4EC),
+                          ],
+                        )),
+                      )),
+                  const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text(
+                        "John John",
+                        style: TextStyle(
+                            fontSize: 50,
+                            fontFamily: 'ABeeZee',
+                            color: Colors.white),
+                      ))
+                ]),
               )))
         ]));
   }

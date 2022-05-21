@@ -28,14 +28,12 @@ class _ProfilePictureState extends State<ProfilePicture>
                             "https://webgradients.com/public/webgradients_png/008%20Rainy%20Ashville.png"),
                         radius: 80));
               })),
-      const Padding(
-          padding: EdgeInsets.only(top: 5),
-          child: Center(
-              child: CircleAvatar(
-            backgroundImage: NetworkImage(
-                "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80"),
-            radius: 75,
-          )))
+      const Center(
+          child: CircleAvatar(
+        backgroundImage: NetworkImage(
+            "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80"),
+        radius: 75,
+      ))
     ]);
   }
 }
