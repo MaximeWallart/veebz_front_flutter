@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:veebz_front_flutter/my_colors.dart';
+import 'package:veebz_front_flutter/widgets/post_widget.dart';
 import 'package:veebz_front_flutter/widgets/profile_interests_widget.dart';
 import 'package:veebz_front_flutter/widgets/profile_picture.dart';
 import 'package:veebz_front_flutter/widgets/veebz_appbar.dart';
@@ -24,7 +26,7 @@ class _ProfileViewState extends State<ProfileView> {
                     image: NetworkImage(
                         "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"),
                     fit: BoxFit.cover)),
-            height: 600.0,
+            height: 750.0,
           ),
           Container(
               decoration: const BoxDecoration(
@@ -34,14 +36,15 @@ class _ProfileViewState extends State<ProfileView> {
                       end: FractionalOffset.bottomCenter,
                       colors: [
                         Colors.transparent,
-                        Color(0xFF3C516A),
+                        MyColors.BackgroundAppColor,
                       ],
                       stops: [
                         0.0,
-                        0.6
+                        0.7
                       ])),
               child: Center(
                   child: SafeArea(
+                      child: SingleChildScrollView(
                 child: Column(children: [
                   const ProfileInterestsWidget(),
                   SizedBox(
@@ -53,8 +56,8 @@ class _ProfileViewState extends State<ProfileView> {
                           begin: FractionalOffset.centerLeft,
                           end: FractionalOffset.centerRight,
                           colors: [
-                            Color(0xFFA5C0EE),
-                            Color(0xFFF5C4EC),
+                            MyColors.AccountFirstColor,
+                            MyColors.AccountSecondColor,
                           ],
                         )),
                       )),
@@ -62,13 +65,16 @@ class _ProfileViewState extends State<ProfileView> {
                       padding: EdgeInsets.all(20.0),
                       child: Text(
                         "John John",
-                        style: TextStyle(
-                            fontSize: 50,
-                            fontFamily: 'ABeeZee',
-                            color: Colors.white),
-                      ))
+                        style: TextStyle(fontSize: 50, color: Colors.white),
+                      )),
+                  const PostWidget(),
+                  const PostWidget(),
+                  const PostWidget(),
+                  const PostWidget(),
+                  const PostWidget(),
+                  const PostWidget(),
                 ]),
-              )))
+              ))))
         ]));
   }
 }
