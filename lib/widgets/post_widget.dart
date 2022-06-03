@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:veebz_front_flutter/my_colors.dart';
+import 'dart:math';
+
+import '../models/user.dart';
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({Key? key}) : super(key: key);
+  final User user;
+
+  final String message;
+
+  final Function delete;
+
+  const PostWidget(
+      {Key? key,
+      required this.user,
+      required this.message,
+      required this.delete})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    int nmb = Random().nextInt(100);
+
     return Container(
       decoration: const BoxDecoration(
           color: MyColors.BackgroundContainerDark,
@@ -16,35 +32,33 @@ class PostWidget extends StatelessWidget {
       child: Column(children: [
         Row(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(5),
+            Padding(
+              padding: const EdgeInsets.all(5),
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 radius: 20,
                 child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80"),
+                    backgroundImage: NetworkImage(user.profilePicLink),
                     radius: 19),
               ),
             ),
-            Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    "John John",
-                    style: TextStyle(color: Colors.white, fontSize: 17),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    "@XxJohnJohn_du_59xX",
-                    style: TextStyle(color: Colors.white54, fontSize: 13),
-                  ),
-                ]),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                user.pseudo,
+                style: const TextStyle(color: Colors.white, fontSize: 17),
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                "@" + user.address,
+                style: const TextStyle(color: Colors.white54, fontSize: 13),
+              ),
+            ]),
             const Spacer(),
             IconButton(
                 onPressed: () {
                   // ignore: avoid_print
                   print("eheh");
+                  delete();
                 },
                 icon: const Icon(
                   Icons.more_vert,
@@ -60,19 +74,20 @@ class PostWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(10),
+            Padding(
+              padding: const EdgeInsets.all(10),
               child: LikeButton(
-                likeCount: 75,
+                likeCount: nmb,
                 countPostion: CountPostion.bottom,
+                likeCountAnimationDuration: const Duration(milliseconds: 200),
               ),
             ),
             Container(
               constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width * 0.73),
-              child: const Text(
-                "Écoutez moi cette petite dingz que viens de sortir mon pote Tyler ✨✨",
-                style: TextStyle(color: Colors.white, fontSize: 15),
+              child: Text(
+                message,
+                style: const TextStyle(color: Colors.white, fontSize: 15),
               ),
             )
           ],

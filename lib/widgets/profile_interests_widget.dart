@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:veebz_front_flutter/router/hero_dialogue_route.dart';
 import 'package:veebz_front_flutter/widgets/profile_picture.dart';
+import 'package:veebz_front_flutter/widgets/veebz_single_view.dart';
 
 class ProfileInterestsWidget extends StatefulWidget {
   const ProfileInterestsWidget({Key? key}) : super(key: key);
@@ -24,13 +26,24 @@ class _ProfileInterestsWidgetState extends State<ProfileInterestsWidget> {
             top: transition ? 175 - 62 : 10,
             left: transition ? MediaQuery.of(context).size.width / 2 - 62 : 30,
             curve: curve,
-            child: const CircleAvatar(
+            child: CircleAvatar(
                 backgroundColor: Colors.white,
                 radius: 62,
-                child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"),
-                    radius: 60))),
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(HeroDialogRoute(
+                          builder: (context) => const Center(
+                                child: VeebzSingleView(veeb: "Rock"),
+                              ),
+                          settings: const RouteSettings()));
+                    },
+                    child: CircleAvatar(
+                        backgroundImage: Image.network(
+                          "https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Text("c'est cassé"),
+                        ).image,
+                        radius: 60)))),
         AnimatedPositioned(
             duration: duration,
             top: transition ? 175 - 37 : 30,
