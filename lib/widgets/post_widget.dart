@@ -3,26 +3,26 @@ import 'package:like_button/like_button.dart';
 import 'package:veebz_front_flutter/my_colors.dart';
 import 'dart:math';
 
-import '../models/user.dart';
+import '../models/post.dart';
 
 class PostWidget extends StatelessWidget {
-  final User user;
-
-  final String message;
+  final Post post;
 
   final Function delete;
 
-  const PostWidget(
-      {Key? key,
-      required this.user,
-      required this.message,
-      required this.delete})
+  const PostWidget({Key? key, required this.post, required this.delete})
       : super(key: key);
+
+  void handleClick(String value) {
+    switch (value) {
+      case 'Supprimer':
+        delete();
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    int nmb = Random().nextInt(100);
-
     return Container(
       decoration: const BoxDecoration(
           color: MyColors.BackgroundContainerDark,
@@ -38,33 +38,35 @@ class PostWidget extends StatelessWidget {
                 backgroundColor: Colors.white,
                 radius: 20,
                 child: CircleAvatar(
-                    backgroundImage: NetworkImage(user.profilePicLink),
+                    backgroundImage: NetworkImage(post.user.profilePicLink),
                     radius: 19),
               ),
             ),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
-                user.pseudo,
+                post.user.pseudo,
                 style: const TextStyle(color: Colors.white, fontSize: 17),
                 textAlign: TextAlign.left,
               ),
               Text(
-                "@" + user.address,
+                "@" + post.user.address,
                 style: const TextStyle(color: Colors.white54, fontSize: 13),
               ),
             ]),
             const Spacer(),
-            IconButton(
-                onPressed: () {
-                  // ignore: avoid_print
-                  print("eheh");
-                  delete();
-                },
-                icon: const Icon(
+            PopupMenuButton(
+                color: Colors.white,
+                child: const Icon(
                   Icons.more_vert,
-                  size: 25.0,
                   color: Colors.white,
-                ))
+                ),
+                onSelected: handleClick,
+                itemBuilder: (BuildContext context) {
+                  return {'Supprimer'}.map((String choice) {
+                    return PopupMenuItem<String>(
+                        value: choice, child: Text(choice));
+                  }).toList();
+                })
           ],
         ),
         const Divider(
@@ -77,7 +79,7 @@ class PostWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: LikeButton(
-                likeCount: nmb,
+                likeCount: post.nmbLike,
                 countPostion: CountPostion.bottom,
                 likeCountAnimationDuration: const Duration(milliseconds: 200),
               ),
@@ -86,7 +88,7 @@ class PostWidget extends StatelessWidget {
               constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width * 0.73),
               child: Text(
-                message,
+                post.message,
                 style: const TextStyle(color: Colors.white, fontSize: 15),
               ),
             )
