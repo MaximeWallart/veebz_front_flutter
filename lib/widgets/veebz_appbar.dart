@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:veebz_front_flutter/data/posts.dart';
+import 'package:veebz_front_flutter/views/profile_view.dart';
 
 class VeebzAppBar extends StatelessWidget implements PreferredSizeWidget {
   const VeebzAppBar({Key? key}) : super(key: key);
@@ -9,10 +11,21 @@ class VeebzAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      title: const Text('VEEBZ',
-          style: TextStyle(fontFamily: 'Mulish', fontSize: 30.0)),
-    );
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        titleSpacing: MediaQuery.of(context).size.width * 0.43,
+        title: GestureDetector(
+          onTap: () {
+            print(Posts.postsList.length);
+          },
+          child: Image.asset(
+            'assets/images/Veebz_logo.png',
+            fit: BoxFit.contain,
+            height: 50,
+          ),
+        )
+        // title: const Text('VEEBZ',
+        //     style: TextStyle(fontFamily: 'Mulish', fontSize: 30.0)),
+        );
   }
 }

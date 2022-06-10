@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:veebz_front_flutter/models/post.dart';
 import 'package:veebz_front_flutter/my_colors.dart';
 import 'package:veebz_front_flutter/views/create_post_view.dart';
 import 'package:veebz_front_flutter/widgets/post_widget.dart';
 import 'package:veebz_front_flutter/widgets/profile_interests_widget.dart';
 import 'package:veebz_front_flutter/widgets/veebz_appbar.dart';
 
-import '../models/user.dart';
+import '../data/posts.dart';
+import '../data/users.dart';
+import '../models/post.dart';
 import '../router/hero_dialogue_route.dart';
 
 class ProfileView extends StatefulWidget {
@@ -18,64 +19,28 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  List<PostWidget> postWidgetList = [];
-
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
-
-  User john = User(
-      pseudo: "John John",
-      address: "XxJohnJohnDu59xX",
-      profilePicLink:
-          "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80");
-
-  User pierre = User(
-      pseudo: "Pierrrrrrrrrre",
-      address: "TahLeπR",
-      profilePicLink:
-          "https://images.unsplash.com/photo-1551847812-f815b31ae67c?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464");
-  User jean = User(
-      pseudo: "Jean...juste Jean",
-      address: "JeanLaD",
-      profilePicLink:
-          "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80");
-
-  @override
-  void initState() {
-    super.initState();
-    List<Post> postsList = [
-      Post(
-          message:
-              "Écoutez moi cette petite dingz que viens de sortir mon pote Tyler ✨✨",
-          user: john),
-      Post(
-          message:
-              "Ça fait trop longtemps que je suis pas allé à un concert ça me manque troooop !!!",
-          user: pierre),
-      Post(message: "Pas fou le dernier son de John John hein", user: jean)
-    ];
-    for (var element in postsList) {
-      postWidgetList
-          .add(PostWidget(post: element, delete: () => deletePost(element)));
-    }
-  }
 
   void deletePost(post) {
     setState(() {
-      postWidgetList.removeWhere((element) => element.post == post);
+      Posts.deletePost(post);
     });
   }
 
   void addPost(post) {
     setState(() {
-      postWidgetList
-          .add(PostWidget(post: post, delete: () => deletePost(post)));
+      Posts.addPost(post, () => deletePost(post));
     });
   }
 
   void addGenericPost() {
-    Post post = Post(user: john, message: "test test");
-    addPost(post);
+    setState(() {
+      Post post = Post(user: Users.john, message: "test test");
+      addPost(post);
+    });
   }
+
+  _refresh() {}
 
   @override
   Widget build(BuildContext context) {
@@ -109,35 +74,50 @@ class _ProfileViewState extends State<ProfileView> {
             child: Center(
                 child: SafeArea(
                     child: SingleChildScrollView(
-              child: Column(children: [
-                const ProfileInterestsWidget(),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 2,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                        begin: FractionalOffset.centerLeft,
-                        end: FractionalOffset.centerRight,
-                        colors: [
-                          MyColors.AccountFirstColor,
-                          MyColors.AccountSecondColor,
-                        ],
+              child: RefreshIndicator(
+                onRefresh: () => _refresh(),
+                child: Column(children: [
+                  const ProfileInterestsWidget(),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 2,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                          begin: FractionalOffset.centerLeft,
+                          end: FractionalOffset.centerRight,
+                          colors: [
+                            MyColors.AccountFirstColor,
+                            MyColors.AccountSecondColor,
+                          ],
+                        )),
                       )),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text(
-                      john.pseudo,
-                      style: const TextStyle(fontSize: 50, color: Colors.white),
-                    )),
-                ...postWidgetList
-              ]),
+                  Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        Users.john.pseudo,
+                        style:
+                            const TextStyle(fontSize: 50, color: Colors.white),
+                      )),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.85,
+                      child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: Posts.postsList.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final post = Posts.postsList[index];
+
+                            return PostWidget(
+                                post: post, delete: () => deletePost(post));
+                          }))
+                ]),
+              ),
             ))))
       ]),
       floatingActionButton: SpeedDial(
         openCloseDial: isDialOpen,
-        backgroundColor: const Color(0xFF6432A6),
+        backgroundColor: MyColors.NewSecondaryColor,
         child: const Icon(
           Icons.add,
           size: 35,
@@ -154,19 +134,22 @@ class _ProfileViewState extends State<ProfileView> {
               color: Colors.white,
             ),
             onTap: () => addGenericPost(),
-            backgroundColor: const Color(0xFF9061DC),
+            backgroundColor: MyColors.NewPrimaryColor,
           ),
           SpeedDialChild(
               child: const Icon(
                 Icons.add,
                 color: Colors.white,
               ),
-              backgroundColor: const Color(0xFF9061DC),
+              backgroundColor: MyColors.NewPrimaryColor,
               onTap: () {
                 Navigator.of(context).push(HeroDialogueRouteBuilder(
                     builder: (context) => const Center(child: CreatePostView()),
                     settings: const RouteSettings()));
-              })
+              }),
+          SpeedDialChild(
+              child: const Icon(Icons.dvr),
+              onTap: () => {print(Posts.postsList.toString())})
         ],
       ),
     );
