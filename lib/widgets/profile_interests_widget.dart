@@ -32,8 +32,8 @@ class _ProfileInterestsWidgetState extends State<ProfileInterestsWidget> {
       affinity: 23,
       postsNmb: 426);
 
-  static const Interest live = Interest(
-      name: "Live",
+  static const Interest street = Interest(
+      name: "Street",
       imgLink:
           "https://images.unsplash.com/photo-1483393458019-411bc6bd104e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80",
       veebers: 84,
@@ -46,6 +46,20 @@ class _ProfileInterestsWidgetState extends State<ProfileInterestsWidget> {
       veebers: 115,
       affinity: 35,
       postsNmb: 65);
+  static const Interest live = Interest(
+      name: "Live",
+      imgLink:
+          "https://images.unsplash.com/photo-1595199279841-5d400790d341?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+      veebers: 379,
+      affinity: 15,
+      postsNmb: 62);
+  static const Interest violin = Interest(
+      name: "Violin",
+      imgLink:
+          "https://images.unsplash.com/photo-1586351012965-861624544334?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+      veebers: 84,
+      affinity: 18,
+      postsNmb: 14);
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +92,7 @@ class _ProfileInterestsWidgetState extends State<ProfileInterestsWidget> {
             right: transition ? MediaQuery.of(context).size.width / 2 - 22 : 60,
             curve: curve,
             child: const InterestPicture(
-              interest: live,
+              interest: street,
               size: 20,
             )),
         AnimatedPositioned(
@@ -95,28 +109,18 @@ class _ProfileInterestsWidgetState extends State<ProfileInterestsWidget> {
             bottom: transition ? 175 - 27 : 40,
             left: transition ? MediaQuery.of(context).size.width / 2 - 27 : 145,
             curve: curve,
-            child: const CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 27,
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://images.unsplash.com/photo-1595199279841-5d400790d341?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"),
-                radius: 25,
-              ),
+            child: const InterestPicture(
+              interest: live,
+              size: 25,
             )),
         AnimatedPositioned(
             duration: duration,
             bottom: transition ? 175 - 32 : 95,
             left: transition ? MediaQuery.of(context).size.width / 2 : 65,
             curve: curve,
-            child: const CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 32,
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://images.unsplash.com/photo-1586351012965-861624544334?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"),
-                radius: 30,
-              ),
+            child: const InterestPicture(
+              interest: violin,
+              size: 30,
             )),
         GestureDetector(
             onTap: () {
