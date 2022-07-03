@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:veebz_front_flutter/data/posts.dart';
-import 'package:veebz_front_flutter/views/profile_view.dart';
 
 class VeebzAppBar extends StatelessWidget implements PreferredSizeWidget {
   const VeebzAppBar({Key? key}) : super(key: key);

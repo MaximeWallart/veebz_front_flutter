@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:image_stack/image_stack.dart';
 import 'package:veebz_front_flutter/my_colors.dart';
 import 'package:veebz_front_flutter/views/create_post_view.dart';
 import 'package:veebz_front_flutter/widgets/post_widget.dart';
@@ -99,6 +100,45 @@ class _ProfileViewState extends State<ProfileView> {
                         style:
                             const TextStyle(fontSize: 50, color: Colors.white),
                       )),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(children: [
+                            const Text(
+                              "Abonnés : ",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            ImageStack(
+                                imageList: Users.genericProfileList,
+                                imageCount: 2,
+                                totalCount: 15,
+                                extraCountTextStyle:
+                                    const TextStyle(color: Colors.white),
+                                backgroundColor: MyColors.AccountFirstColor,
+                                imageBorderColor: MyColors.AccountFirstColor,
+                                showTotalCount: true),
+                          ]),
+                          Row(
+                            children: [
+                              const Text(
+                                "Abonnements : ",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              ImageStack(
+                                imageList: Users.genericProfileList,
+                                imageCount: 2,
+                                totalCount: 68,
+                                backgroundColor: MyColors.AccountSecondColor,
+                                imageBorderColor: MyColors.AccountSecondColor,
+                                extraCountTextStyle:
+                                    const TextStyle(color: Colors.white),
+                              )
+                            ],
+                          )
+                        ]),
+                  ),
                   SizedBox(
                       height: MediaQuery.of(context).size.height * 0.85,
                       child: ListView.builder(
