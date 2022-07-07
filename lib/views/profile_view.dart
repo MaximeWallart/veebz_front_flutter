@@ -10,10 +10,13 @@ import 'package:veebz_front_flutter/widgets/veebz_appbar.dart';
 import '../data/posts.dart';
 import '../data/users.dart';
 import '../models/post.dart';
+import '../models/user.dart';
 import '../router/hero_dialogue_route.dart';
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({Key? key}) : super(key: key);
+  const ProfileView({Key? key, required this.user}) : super(key: key);
+
+  final User user;
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
@@ -36,7 +39,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   void addGenericPost() {
     setState(() {
-      Post post = Post(user: Users.john, message: "test test");
+      Post post = Post(user: widget.user, message: "test test");
       addPost(post);
     });
   }
@@ -94,9 +97,9 @@ class _ProfileViewState extends State<ProfileView> {
                         )),
                       )),
                   Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
                       child: Text(
-                        Users.john.pseudo,
+                        widget.user.pseudo,
                         style:
                             const TextStyle(fontSize: 50, color: Colors.white),
                       )),
@@ -113,7 +116,7 @@ class _ProfileViewState extends State<ProfileView> {
                             ImageStack(
                                 imageList: Users.genericProfileList,
                                 imageCount: 2,
-                                totalCount: 15,
+                                totalCount: widget.user.followers,
                                 extraCountTextStyle:
                                     const TextStyle(color: Colors.white),
                                 backgroundColor: MyColors.AccountFirstColor,
@@ -139,6 +142,22 @@ class _ProfileViewState extends State<ProfileView> {
                           )
                         ]),
                   ),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 5.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10.0)),
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          widget.user.description,
+                          style: const TextStyle(color: Colors.white),
+                          textAlign: TextAlign.center,
+                          maxLines: 3,
+                        ),
+                      )),
                   SizedBox(
                       height: MediaQuery.of(context).size.height * 0.85,
                       child: ListView.builder(

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:veebz_front_flutter/my_colors.dart';
 import 'package:veebz_front_flutter/views/profile_view.dart';
+
+import 'data/users.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,26 +13,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Map<int, Color> _purpleMap = {
-    //   50: const Color(0xFF9D72D5),
-    //   100: const Color(0xFF9262D0),
-    //   200: const Color(0xFF8752CB),
-    //   300: const Color(0xFF7C43C7),
-    //   400: const Color(0xFF7238BC),
-    //   500: const Color(0xFF6834AD),
-    //   600: const Color(0xFF5F2F9D),
-    //   700: const Color(0xFF552A8D),
-    //   800: const Color(0xFF4C267E),
-    //   900: const Color(0xFF42216E),
-    // };
+    const MaterialColor _colorPalette = MaterialColor(0xFFFFD6CC, <int, Color>{
+      50: Color(0xFFFFF5F3),
+      100: Color(0xFFFFE6E0),
+      200: Color(0xFFFFD6CC),
+      300: Color(0xFFFFC6B8),
+      400: Color(0xFFFFB9A8),
+      500: Color(0xFFFFAD99),
+      600: Color(0xFFFFA691),
+      700: Color(0xFFFF9C86),
+      800: Color(0xFFFF937C),
+      900: Color(0xFFFF836B),
+    });
 
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: _colorPalette,
         fontFamily: 'ABeeZee',
       ),
-      home: const ProfileView(),
+      home: ProfileView(user: Users.john),
     );
   }
 }

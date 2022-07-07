@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.veebz_front_flutter">
    <application
-        android:label="veebz_front_flutter"
+        android:label="Veebz"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/veebz_logo">
         <activity
             android:name=".MainActivity"
             android:exported="true"
