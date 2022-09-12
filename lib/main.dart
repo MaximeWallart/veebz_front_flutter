@@ -1,7 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:veebz_front_flutter/views/profile_view.dart';
-
-import 'data/users.dart';
+import 'package:veebz_front_flutter/views/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,6 +8,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  //Initialize Firebase App
+  Future<FirebaseApp> _initializeFirebaseApp() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+    return firebaseApp;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +36,17 @@ class MyApp extends StatelessWidget {
         primarySwatch: _colorPalette,
         fontFamily: 'ABeeZee',
       ),
-      home: ProfileView(user: Users.john),
+      home: FutureBuilder(
+        future: _initializeFirebaseApp(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return const LoginPage();
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ), //ProfileView(user: Users.john),
     );
   }
 }

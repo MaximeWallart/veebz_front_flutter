@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "80672116994",
+    "project_id": "veebz-3f5b9",
+    "storage_bucket": "veebz-3f5b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80672116994:android:5a89c6d55f5fc9bb63b21b",
+        "android_client_info": {
+          "package_name": "com.example.veebz_front_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80672116994-0srrdjssf4qestros0kp6ucfqfjebd0a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl0rrzQ-2Jte7wpVGsLrz5REfAiD66ZeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "80672116994-0srrdjssf4qestros0kp6ucfqfjebd0a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

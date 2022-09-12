@@ -15,7 +15,7 @@ class VeebzImportantButton extends StatelessWidget {
         fillColor: MyColors.NewPrimaryColor,
         splashColor: MyColors.NewTertiaryColor,
         constraints: BoxConstraints.loose(
-            Size.fromWidth(MediaQuery.of(context).size.width / 2)),
+            Size.fromWidth(MediaQuery.of(context).size.width)),
         child: Text(text),
         onPressed: onPressed,
         shape: const StadiumBorder());
