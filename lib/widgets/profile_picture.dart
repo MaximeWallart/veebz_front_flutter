@@ -15,6 +15,12 @@ class _ProfilePictureState extends State<ProfilePicture>
         ..repeat();
 
   @override
+  dispose() {
+    _controller.dispose(); // you need this
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(children: [
       Center(

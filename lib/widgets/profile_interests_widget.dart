@@ -141,6 +141,14 @@ class InterestPicture extends StatelessWidget {
   final double size;
   final Interest interest;
 
+  void showAlertDialogue(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return VeebzSingleView(interest: interest);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
@@ -148,12 +156,7 @@ class InterestPicture extends StatelessWidget {
         radius: size + 2,
         child: GestureDetector(
             onTap: () {
-              Navigator.of(context).push(HeroDialogueRouteBuilder(
-                  builder: (context) => Center(
-                          child: VeebzSingleView(
-                        interest: interest,
-                      )),
-                  settings: const RouteSettings()));
+              showAlertDialogue(context);
             },
             child: CircleAvatar(
                 backgroundImage: Image.network(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:veebz_front_flutter/my_colors.dart';
 import 'package:veebz_front_flutter/views/profile_view.dart';
 
 import 'data/users.dart';

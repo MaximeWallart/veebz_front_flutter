@@ -11,7 +11,6 @@ import '../data/posts.dart';
 import '../data/users.dart';
 import '../models/post.dart';
 import '../models/user.dart';
-import '../router/hero_dialogue_route.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key, required this.user}) : super(key: key);
@@ -44,8 +43,6 @@ class _ProfileViewState extends State<ProfileView> {
     });
   }
 
-  _refresh() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,9 +74,11 @@ class _ProfileViewState extends State<ProfileView> {
                     ])),
             child: Center(
                 child: SafeArea(
-                    child: SingleChildScrollView(
-              child: RefreshIndicator(
-                onRefresh: () => _refresh(),
+                    child: RefreshIndicator(
+              onRefresh: () async {
+                return Future<void>.delayed(const Duration(seconds: 3));
+              },
+              child: SingleChildScrollView(
                 child: Column(children: [
                   const ProfileInterestsWidget(),
                   SizedBox(
@@ -158,18 +157,16 @@ class _ProfileViewState extends State<ProfileView> {
                           maxLines: 3,
                         ),
                       )),
-                  SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.85,
-                      child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: Posts.postsList.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final post = Posts.postsList[index];
+                  ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: Posts.postsList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final post = Posts.postsList[index];
 
-                            return PostWidget(
-                                post: post, delete: () => deletePost(post));
-                          }))
+                        return PostWidget(
+                            post: post, delete: () => deletePost(post));
+                      })
                 ]),
               ),
             ))))
@@ -182,9 +179,12 @@ class _ProfileViewState extends State<ProfileView> {
           size: 35,
         ),
         animationCurve: Curves.elasticInOut,
+        animationDuration: const Duration(milliseconds: 300),
+        curve: Curves.fastOutSlowIn,
         spaceBetweenChildren: 4,
         spacing: 3,
-        renderOverlay: false,
+        overlayColor: MyColors.BackgroundContainerDark,
+        overlayOpacity: 0.5,
         animatedIcon: AnimatedIcons.menu_close,
         children: [
           SpeedDialChild(
@@ -202,9 +202,13 @@ class _ProfileViewState extends State<ProfileView> {
               ),
               backgroundColor: MyColors.NewPrimaryColor,
               onTap: () {
-                Navigator.of(context).push(HeroDialogueRouteBuilder(
-                    builder: (context) => const Center(child: CreatePostView()),
-                    settings: const RouteSettings()));
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const Center(
+                        child: CreatePostView(),
+                      );
+                    });
               }),
           SpeedDialChild(
               child: const Icon(Icons.dvr),
