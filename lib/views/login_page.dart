@@ -2,16 +2,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:veebz_front_flutter/my_colors.dart';
 import 'package:veebz_front_flutter/views/profile_view.dart';
+import 'package:veebz_front_flutter/views/sign_up.dart';
 import 'package:veebz_front_flutter/widgets/veebz_important_button.dart';
 
 import '../data/users.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
 
   @override
   State<LoginPage> createState() => _LoginPageState();
-}
 
 class _LoginPageState extends State<LoginPage> {
   //Login function
@@ -113,7 +115,13 @@ class _LoginPageState extends State<LoginPage> {
                                 user: Users.john,
                               )));
                     }
-                  })
+                  }),
+              VeebzImportantButton(
+                  text: "Sign up",
+                  onPressed: () async {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => signUp()));
+              })
             ],
           ),
         ),
