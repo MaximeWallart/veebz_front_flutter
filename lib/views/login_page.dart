@@ -8,12 +8,17 @@ import 'package:veebz_front_flutter/widgets/veebz_important_button.dart';
 import '../data/users.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
+  LoginPage({Key? key}) : super(key: key);
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   State<LoginPage> createState() => _LoginPageState();
+}
+
+@override
+State<LoginPage> createState() => _LoginPageState();
 
 class _LoginPageState extends State<LoginPage> {
   //Login function
@@ -38,8 +43,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
     return Scaffold(
       backgroundColor: MyColors.BackgroundAppColor,
       body: SingleChildScrollView(
@@ -69,7 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                 height: MediaQuery.of(context).size.height / 10,
               ),
               TextField(
-                controller: _emailController,
+                controller: widget._emailController,
+                textInputAction: TextInputAction.next,
                 maxLines: 1,
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(
@@ -86,8 +90,9 @@ class _LoginPageState extends State<LoginPage> {
                 height: MediaQuery.of(context).size.height / 30,
               ),
               TextField(
-                controller: _passwordController,
+                controller: widget._passwordController,
                 obscureText: true,
+                textInputAction: TextInputAction.next,
                 maxLines: 1,
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(
@@ -104,8 +109,8 @@ class _LoginPageState extends State<LoginPage> {
                   text: "Login",
                   onPressed: () async {
                     User? user = await loginUsingEmailPassword(
-                        email: _emailController.text,
-                        password: _passwordController.text,
+                        email: widget._emailController.text,
+                        password: widget._passwordController.text,
                         context: context);
                     // ignore: avoid_print
                     print(user);
@@ -119,9 +124,9 @@ class _LoginPageState extends State<LoginPage> {
               VeebzImportantButton(
                   text: "Sign up",
                   onPressed: () async {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => signUp()));
-              })
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => signUp()));
+                  })
             ],
           ),
         ),

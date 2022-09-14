@@ -7,7 +7,11 @@ import '../data/users.dart';
 import '../my_colors.dart';
 
 class signUp extends StatefulWidget {
-  const signUp({Key? key}) : super(key: key);
+  signUp({Key? key}) : super(key: key);
+
+  final TextEditingController _userEmail = TextEditingController();
+  final TextEditingController _userPassword = TextEditingController();
+  final TextEditingController _userPasswordConfirmed = TextEditingController();
 
   @override
   State<signUp> createState() => _signUpState();
@@ -15,26 +19,27 @@ class signUp extends StatefulWidget {
 
 class _signUpState extends State<signUp> {
   //Crete account function
-  Future<User?> createAccountUsingEmailPassword({required String email, required String password, required BuildContext context}) async{
-  FirebaseAuth auth = FirebaseAuth.instance;
-  User? user;
-  try {
-    UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: email, password: password);
-    user = userCredential.user;
-  } on FirebaseAuthException catch (e){
-    print(e.message);
-  }
+  Future<User?> createAccountUsingEmailPassword(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+    }
 
-  return user;
-}
+    return user;
+  }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _userEmail = TextEditingController();
-    TextEditingController _userPassword = TextEditingController();
-    TextEditingController _userPasswordConfirmed = TextEditingController();
     bool isPasswordMatched = false;
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: MyColors.BackgroundAppColor,
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
@@ -57,73 +62,76 @@ class _signUpState extends State<signUp> {
               const Text(
                 "Login Page",
                 style:
-                TextStyle(color: MyColors.NewPrimaryColor, fontSize: 30.0),
+                    TextStyle(color: MyColors.NewPrimaryColor, fontSize: 30.0),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 30,
               ),
               TextField(
-                controller: _userEmail,
+                controller: widget._userEmail,
+                autofocus: true,
+                textInputAction: TextInputAction.next,
                 maxLines: 1,
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     filled: true,
-                  fillColor: Colors.white.withOpacity(0.5),
+                    fillColor: Colors.white.withOpacity(0.5),
                     hintText: "Email",
-                    hintStyle: TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.italic)),
+                    hintStyle: const TextStyle(
+                        color: Colors.white, fontStyle: FontStyle.italic)),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 30,
               ),
               TextField(
                 obscureText: true,
-                controller: _userPassword,
+                textInputAction: TextInputAction.next,
+                controller: widget._userPassword,
                 decoration: InputDecoration(
                     fillColor: Colors.white.withOpacity(0.5),
                     border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     filled: true,
                     hintText: "Password",
-                    hintStyle: TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.italic)),
+                    hintStyle: const TextStyle(
+                        color: Colors.white, fontStyle: FontStyle.italic)),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 30,
               ),
               TextField(
                 obscureText: true,
-                controller: _userPasswordConfirmed,
+                controller: widget._userPasswordConfirmed,
                 decoration: InputDecoration(
                     fillColor: Colors.white.withOpacity(0.5),
                     border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     filled: true,
                     hintText: "Confirm Password",
-                    hintStyle: TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.italic)),
+                    hintStyle: const TextStyle(
+                        color: Colors.white, fontStyle: FontStyle.italic)),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 30,
               ),
-              VeebzImportantButton(text: "create account", onPressed: (
-                  ) async {
-                if (_userPassword.text == _userPasswordConfirmed.text){
-                  User? user = await createAccountUsingEmailPassword(
-                      email: _userEmail.text,
-                      password: _userPassword.text,
-                      context: context);
-                  print(user);
-                  if (user != null) {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileView(
-                        user: Users.john)));
-                  }
-                }
-              }),
+              VeebzImportantButton(
+                  text: "create account",
+                  onPressed: () async {
+                    if (widget._userPassword.text ==
+                        widget._userPasswordConfirmed.text) {
+                      User? user = await createAccountUsingEmailPassword(
+                          email: widget._userEmail.text,
+                          password: widget._userPassword.text,
+                          context: context);
+                      print(user);
+                      if (user != null) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ProfileView(user: Users.john)));
+                      }
+                    }
+                  }),
             ],
           ),
         ),
