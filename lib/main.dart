@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         future: _initializeFirebaseApp(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return const LoginPage();
+            return LoginPage();
           }
           return const Center(
             child: CircularProgressIndicator(),

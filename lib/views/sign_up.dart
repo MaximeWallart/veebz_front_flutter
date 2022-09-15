@@ -8,7 +8,11 @@ import '../data/users.dart';
 import '../my_colors.dart';
 
 class signUp extends StatefulWidget {
-  const signUp({Key? key}) : super(key: key);
+  signUp({Key? key}) : super(key: key);
+
+  final TextEditingController _userEmail = TextEditingController();
+  final TextEditingController _userPassword = TextEditingController();
+  final TextEditingController _userPasswordConfirmed = TextEditingController();
 
   @override
   State<signUp> createState() => _signUpState();
@@ -35,9 +39,6 @@ class _signUpState extends State<signUp> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _userEmail = TextEditingController();
-    TextEditingController _userPassword = TextEditingController();
-    TextEditingController _userPasswordConfirmed = TextEditingController();
     bool isPasswordMatched = false;
     return Scaffold(
       backgroundColor: MyColors.BackgroundAppColor,
@@ -91,7 +92,8 @@ class _signUpState extends State<signUp> {
               TextField(
                 textInputAction: TextInputAction.next,
                 obscureText: true,
-                controller: _userPassword,
+                textInputAction: TextInputAction.next,
+                controller: widget._userPassword,
                 decoration: InputDecoration(
                     fillColor: Colors.white.withOpacity(0.5),
                     border: const OutlineInputBorder(
@@ -106,7 +108,7 @@ class _signUpState extends State<signUp> {
               ),
               TextField(
                 obscureText: true,
-                controller: _userPasswordConfirmed,
+                controller: widget._userPasswordConfirmed,
                 decoration: InputDecoration(
                     fillColor: Colors.white.withOpacity(0.5),
                     border: const OutlineInputBorder(
