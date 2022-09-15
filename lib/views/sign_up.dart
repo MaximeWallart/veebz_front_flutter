@@ -82,6 +82,7 @@ class _signUpState extends State<signUp> {
                 ),
                 TextField(
                   controller: widget._userEmail,
+                  keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   maxLines: 1,
                   decoration: InputDecoration(
