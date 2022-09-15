@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:veebz_front_flutter/models/interest.dart';
-import 'package:veebz_front_flutter/router/hero_dialogue_route.dart';
-import 'package:veebz_front_flutter/widgets/profile_picture.dart';
-import 'package:veebz_front_flutter/views/veebz_single_view.dart';
+import 'package:veebz_front_flutter/widgets/profile_picture_widget.dart';
+import 'package:veebz_front_flutter/widgets/pop-ups/interest_widget.dart';
 
 class ProfileInterestsWidget extends StatefulWidget {
   const ProfileInterestsWidget({Key? key}) : super(key: key);
@@ -128,7 +125,7 @@ class _ProfileInterestsWidgetState extends State<ProfileInterestsWidget> {
                 transition = !transition;
               });
             },
-            child: const ProfilePicture())
+            child: const ProfilePictureWidget())
       ])),
     );
   }
@@ -145,7 +142,7 @@ class InterestPicture extends StatelessWidget {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return VeebzSingleView(interest: interest);
+          return InterestWidget(interest: interest);
         });
   }
 

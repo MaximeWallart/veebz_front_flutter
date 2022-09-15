@@ -2,25 +2,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:veebz_front_flutter/my_colors.dart';
 import 'package:veebz_front_flutter/views/profile_view.dart';
-import 'package:veebz_front_flutter/views/sign_up.dart';
-import 'package:veebz_front_flutter/widgets/veebz_important_button.dart';
+import 'package:veebz_front_flutter/views/sign_up_view.dart';
+import 'package:veebz_front_flutter/widgets/veebz_important_button_widget.dart';
 
 import '../data/users.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+class LoginView extends StatefulWidget {
+  LoginView({Key? key}) : super(key: key);
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
 @override
-State<LoginPage> createState() => _LoginPageState();
+State<LoginView> createState() => _LoginViewState();
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginViewState extends State<LoginView> {
   //Login function
   Future<User?> loginUsingEmailPassword(
       {required String email,
@@ -34,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
+        // ignore: avoid_print
         print("No user found for that email");
       }
     }
@@ -143,8 +144,8 @@ class _LoginPageState extends State<LoginPage> {
                     mainColor: MyColors.NewSecondaryColor,
                     splashColor: MyColors.NewTertiaryColor,
                     onPressed: () async {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => signUp()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SignUpView()));
                     })
               ],
             ),

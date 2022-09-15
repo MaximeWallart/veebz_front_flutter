@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:veebz_front_flutter/models/post.dart';
 
-import '../data/posts.dart';
-import '../data/users.dart';
+import '../../data/posts.dart';
+import '../../data/users.dart';
 
-class CreatePostView extends StatelessWidget {
-  const CreatePostView({Key? key}) : super(key: key);
+class PostCreationWidget extends StatelessWidget {
+  const PostCreationWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String message = "";
-
     TextEditingController _messageController = TextEditingController();
 
     Post post;

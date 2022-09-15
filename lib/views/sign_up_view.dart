@@ -1,23 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:veebz_front_flutter/views/profile_view.dart';
-import 'package:veebz_front_flutter/widgets/veebz_important_button.dart';
+import 'package:veebz_front_flutter/widgets/veebz_important_button_widget.dart';
 
 import '../data/users.dart';
 import '../my_colors.dart';
 
-class signUp extends StatefulWidget {
-  signUp({Key? key}) : super(key: key);
+class SignUpView extends StatefulWidget {
+  SignUpView({Key? key}) : super(key: key);
 
   final TextEditingController _userEmail = TextEditingController();
   final TextEditingController _userPassword = TextEditingController();
   final TextEditingController _userPasswordConfirmed = TextEditingController();
 
   @override
-  State<signUp> createState() => _signUpState();
+  State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _signUpState extends State<signUp> {
+class _SignUpViewState extends State<SignUpView> {
   //Crete account function
   Future<User?> createAccountUsingEmailPassword(
       {required String email,
@@ -30,6 +30,7 @@ class _signUpState extends State<signUp> {
           email: email, password: password);
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {
+      // ignore: avoid_print
       print(e.message);
     }
 

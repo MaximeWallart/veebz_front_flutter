@@ -1,8 +1,5 @@
 import 'package:veebz_front_flutter/data/users.dart';
-
 import '../models/post.dart';
-import '../models/user.dart';
-import '../widgets/post_widget.dart';
 
 class Posts {
   static List<Post> postsList = [

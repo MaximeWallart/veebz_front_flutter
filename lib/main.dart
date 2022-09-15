@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:veebz_front_flutter/views/login_page.dart';
+import 'package:veebz_front_flutter/views/login_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,13 +40,13 @@ class MyApp extends StatelessWidget {
         future: _initializeFirebaseApp(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return LoginPage();
+            return LoginView();
           }
           return const Center(
             child: CircularProgressIndicator(),
           );
         },
-      ), //ProfileView(user: Users.john),
+      ),
     );
   }
 }

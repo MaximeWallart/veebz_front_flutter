@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import '../models/interest.dart';
+import '../../models/interest.dart';
 
-class VeebzSingleView extends StatelessWidget {
-  const VeebzSingleView({Key? key, required this.interest}) : super(key: key);
+class InterestWidget extends StatelessWidget {
+  const InterestWidget({Key? key, required this.interest}) : super(key: key);
 
   final Interest interest;
 

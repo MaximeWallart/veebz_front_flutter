@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_stack/image_stack.dart';
 import 'package:veebz_front_flutter/my_colors.dart';
-import 'package:veebz_front_flutter/views/create_post_view.dart';
+import 'package:veebz_front_flutter/widgets/pop-ups/post_creation_widget.dart';
 import 'package:veebz_front_flutter/widgets/post_widget.dart';
 import 'package:veebz_front_flutter/widgets/profile_interests_widget.dart';
 import 'package:veebz_front_flutter/widgets/veebz_appbar.dart';
@@ -206,12 +206,13 @@ class _ProfileViewState extends State<ProfileView> {
                     context: context,
                     builder: (BuildContext context) {
                       return const Center(
-                        child: CreatePostView(),
+                        child: PostCreationWidget(),
                       );
                     });
               }),
           SpeedDialChild(
               child: const Icon(Icons.dvr),
+              // ignore: avoid_print
               onTap: () => {print(Posts.postsList.toString())})
         ],
       ),
