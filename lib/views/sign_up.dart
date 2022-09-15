@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:veebz_front_flutter/views/profile_view.dart';
 import 'package:veebz_front_flutter/widgets/veebz_important_button.dart';
+import 'package:email_validator/email_validator.dart';
 
 import '../data/users.dart';
 import '../my_colors.dart';
@@ -57,20 +58,24 @@ class _signUpState extends State<signUp> {
                 height: MediaQuery.of(context).size.width / 2,
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 10,
+                height: MediaQuery.of(context).size.height / 20,
               ),
               const Text(
-                "Login Page",
+                "Sign Up Page",
                 style:
                     TextStyle(color: MyColors.NewPrimaryColor, fontSize: 30.0),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 20,
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 30,
               ),
               TextField(
-                controller: widget._userEmail,
-                autofocus: true,
+                keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
+                autofocus: true,
+                controller: _userEmail,
                 maxLines: 1,
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(
@@ -85,6 +90,7 @@ class _signUpState extends State<signUp> {
                 height: MediaQuery.of(context).size.height / 30,
               ),
               TextField(
+                textInputAction: TextInputAction.next,
                 obscureText: true,
                 textInputAction: TextInputAction.next,
                 controller: widget._userPassword,
@@ -118,11 +124,10 @@ class _signUpState extends State<signUp> {
               VeebzImportantButton(
                   text: "create account",
                   onPressed: () async {
-                    if (widget._userPassword.text ==
-                        widget._userPasswordConfirmed.text) {
+                    if (_userPassword.text == _userPasswordConfirmed.text) {
                       User? user = await createAccountUsingEmailPassword(
-                          email: widget._userEmail.text,
-                          password: widget._userPassword.text,
+                          email: _userEmail.text,
+                          password: _userPassword.text,
                           context: context);
                       print(user);
                       if (user != null) {
