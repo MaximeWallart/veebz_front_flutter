@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:veebz_front_flutter/data/interests.dart';
 import 'package:veebz_front_flutter/models/interest.dart';
 import 'package:veebz_front_flutter/widgets/profile_picture_widget.dart';
 import 'package:veebz_front_flutter/widgets/pop-ups/interest_widget.dart';
@@ -14,114 +15,94 @@ class _ProfileInterestsWidgetState extends State<ProfileInterestsWidget> {
   bool transition = false;
   static const Duration duration = Duration(seconds: 1);
   static const Curve curve = Curves.easeInOut;
-  static const Interest folk = Interest(
-      name: "Indie - Folk",
-      imgLink:
-          "https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      veebers: 225,
-      affinity: 45,
-      postsNmb: 50);
-  static const Interest rock = Interest(
-      name: "Rock",
-      imgLink:
-          "https://images.unsplash.com/photo-1565022472425-b6ae14b4b050?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=727&q=80",
-      veebers: 845,
-      affinity: 23,
-      postsNmb: 426);
+  List<Map<String, double>> sides = [];
+  List<Map<String, double>> corners = [];
 
-  static const Interest street = Interest(
-      name: "Street",
-      imgLink:
-          "https://images.unsplash.com/photo-1483393458019-411bc6bd104e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80",
-      veebers: 84,
-      affinity: 10,
-      postsNmb: 24);
-  static const Interest piano = Interest(
-      name: "Piano",
-      imgLink:
-          "https://images.unsplash.com/photo-1552422535-c45813c61732?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      veebers: 115,
-      affinity: 35,
-      postsNmb: 65);
-  static const Interest live = Interest(
-      name: "Live",
-      imgLink:
-          "https://images.unsplash.com/photo-1595199279841-5d400790d341?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      veebers: 379,
-      affinity: 15,
-      postsNmb: 62);
-  static const Interest violin = Interest(
-      name: "Violin",
-      imgLink:
-          "https://images.unsplash.com/photo-1586351012965-861624544334?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      veebers: 84,
-      affinity: 18,
-      postsNmb: 14);
+  void initPositions(BuildContext context) {
+    corners.add({
+      "x": MediaQuery.of(context).size.width * 0.05,
+      "y": MediaQuery.of(context).size.height * 0.02
+    });
+    corners.add({
+      "x": MediaQuery.of(context).size.width * 0.65,
+      "y": MediaQuery.of(context).size.height * 0.25
+    });
+    corners.add({
+      "x": MediaQuery.of(context).size.width * 0.05,
+      "y": MediaQuery.of(context).size.height * 0.25
+    });
+    corners.add({
+      "x": MediaQuery.of(context).size.width * 0.65,
+      "y": MediaQuery.of(context).size.height * 0.02
+    });
+    sides.add({
+      "x": MediaQuery.of(context).size.width * 0.05,
+      "y": MediaQuery.of(context).size.height * 0.15
+    });
+    sides.add({
+      "x": MediaQuery.of(context).size.width * 0.3,
+      "y": MediaQuery.of(context).size.height * 0.02
+    });
+    sides.add({
+      "x": MediaQuery.of(context).size.width * 0.3,
+      "y": MediaQuery.of(context).size.height * 0.25
+    });
+    sides.add({
+      "x": MediaQuery.of(context).size.width * 0.65,
+      "y": MediaQuery.of(context).size.height * 0.15
+    });
+  }
+
+  Map<String, double> asignPosition(double size) {
+    Map<String, double> res;
+    if (size < 40) {
+      res = sides.first;
+      sides.remove(sides.first);
+      return res;
+    } else {
+      res = corners.first;
+      corners.remove(corners.first);
+      return res;
+    }
+  }
+
+  Widget createInterestPicture(
+      BuildContext context, Interest interest, double size) {
+    double parentHeight = MediaQuery.of(context).size.width * 0.9;
+    print("---------------------${interest.name}");
+    final Map<String, double> coordinates = asignPosition(size);
+    print(coordinates);
+    return AnimatedPositioned(
+        duration: duration,
+        top: transition ? ((parentHeight / 2)) - (size + 2) : coordinates["y"],
+        left: transition
+            ? MediaQuery.of(context).size.width / 2 - (size + 2)
+            : coordinates["x"],
+        curve: curve,
+        child: InterestPicture(
+          interest: interest,
+          size: size,
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
+    initPositions(context);
+
     return SizedBox(
-      height: 350,
+      height: MediaQuery.of(context).size.width * 0.9,
       child: Center(
           child: Stack(children: [
-        AnimatedPositioned(
-            duration: duration,
-            top: transition ? 175 - 62 : 10,
-            left: transition ? MediaQuery.of(context).size.width / 2 - 62 : 30,
-            curve: curve,
-            child: const InterestPicture(
-              interest: folk,
-              size: 60,
-            )),
-        AnimatedPositioned(
-            duration: duration,
-            top: transition ? 175 - 37 : 30,
-            right:
-                transition ? MediaQuery.of(context).size.width / 2 - 37 : 110,
-            curve: curve,
-            child: const InterestPicture(
-              interest: rock,
-              size: 35,
-            )),
-        AnimatedPositioned(
-            duration: duration,
-            top: transition ? 175 - 22 : 110,
-            right: transition ? MediaQuery.of(context).size.width / 2 - 22 : 60,
-            curve: curve,
-            child: const InterestPicture(
-              interest: street,
-              size: 20,
-            )),
-        AnimatedPositioned(
-            duration: duration,
-            bottom: transition ? 175 - 47 : 60,
-            right: transition ? MediaQuery.of(context).size.width / 2 - 47 : 30,
-            curve: curve,
-            child: const InterestPicture(
-              interest: piano,
-              size: 45,
-            )),
-        AnimatedPositioned(
-            duration: duration,
-            bottom: transition ? 175 - 27 : 40,
-            left: transition ? MediaQuery.of(context).size.width / 2 - 27 : 145,
-            curve: curve,
-            child: const InterestPicture(
-              interest: live,
-              size: 25,
-            )),
-        AnimatedPositioned(
-            duration: duration,
-            bottom: transition ? 175 - 32 : 95,
-            left: transition ? MediaQuery.of(context).size.width / 2 : 65,
-            curve: curve,
-            child: const InterestPicture(
-              interest: violin,
-              size: 30,
-            )),
+        createInterestPicture(context, Interests.folk, 60),
+        createInterestPicture(context, Interests.piano, 45),
+        createInterestPicture(context, Interests.rock, 35),
+        createInterestPicture(context, Interests.violin, 30),
+        createInterestPicture(context, Interests.live, 25),
+        createInterestPicture(context, Interests.street, 20),
         GestureDetector(
             onTap: () {
               setState(() {
+                sides = [];
                 transition = !transition;
               });
             },
