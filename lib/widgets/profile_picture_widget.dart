@@ -24,6 +24,8 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget>
 
   @override
   Widget build(BuildContext context) {
+    double taille = MediaQuery.of(context).size.width / 5;
+
     return Stack(children: [
       Center(
           child: AnimatedBuilder(
@@ -31,7 +33,7 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget>
               builder: (_, child) {
                 return Transform.rotate(
                     angle: _controller.value * 2 * math.pi,
-                    child: const CircleAvatar(
+                    child: CircleAvatar(
                         // child: Container(
                         //   decoration: const BoxDecoration(
                         //       gradient: LinearGradient(
@@ -43,14 +45,14 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget>
                         //     ],
                         //   )),
                         // ),
-                        backgroundImage: NetworkImage(
+                        backgroundImage: const NetworkImage(
                             "https://webgradients.com/public/webgradients_png/008%20Rainy%20Ashville.png"),
-                        radius: 80));
+                        radius: taille + 3));
               })),
       Center(
           child: CircleAvatar(
         backgroundImage: NetworkImage(Users.john.profilePicLink),
-        radius: 75,
+        radius: taille,
       ))
     ]);
   }
