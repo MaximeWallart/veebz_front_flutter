@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:veebz_front_flutter/data/interests.dart';
 import 'package:veebz_front_flutter/models/interest.dart';
@@ -19,43 +21,46 @@ class _ProfileInterestsWidgetState extends State<ProfileInterestsWidget> {
   List<Map<String, double>> corners = [];
 
   void initPositions(BuildContext context) {
+    sides = [];
+    corners = [];
     corners.add({
       "x": MediaQuery.of(context).size.width * 0.05,
       "y": MediaQuery.of(context).size.height * 0.02
     });
     corners.add({
-      "x": MediaQuery.of(context).size.width * 0.65,
-      "y": MediaQuery.of(context).size.height * 0.25
+      "x": MediaQuery.of(context).size.width * 0.7,
+      "y": MediaQuery.of(context).size.height * 0.26
     });
     corners.add({
       "x": MediaQuery.of(context).size.width * 0.05,
-      "y": MediaQuery.of(context).size.height * 0.25
+      "y": MediaQuery.of(context).size.height * 0.26
     });
     corners.add({
-      "x": MediaQuery.of(context).size.width * 0.65,
+      "x": MediaQuery.of(context).size.width * 0.7,
       "y": MediaQuery.of(context).size.height * 0.02
     });
     sides.add({
       "x": MediaQuery.of(context).size.width * 0.05,
-      "y": MediaQuery.of(context).size.height * 0.15
+      "y": MediaQuery.of(context).size.height * 0.16
     });
     sides.add({
-      "x": MediaQuery.of(context).size.width * 0.3,
+      "x": MediaQuery.of(context).size.width * 0.4,
       "y": MediaQuery.of(context).size.height * 0.02
     });
     sides.add({
-      "x": MediaQuery.of(context).size.width * 0.3,
-      "y": MediaQuery.of(context).size.height * 0.25
+      "x": MediaQuery.of(context).size.width * 0.4,
+      "y": MediaQuery.of(context).size.height * 0.26
     });
     sides.add({
-      "x": MediaQuery.of(context).size.width * 0.65,
+      "x": MediaQuery.of(context).size.width * 0.7,
       "y": MediaQuery.of(context).size.height * 0.15
     });
   }
 
   Map<String, double> asignPosition(double size) {
     Map<String, double> res;
-    if (size < 40) {
+    print(corners.length);
+    if (size < 40 && corners.isEmpty) {
       res = sides.first;
       sides.remove(sides.first);
       return res;
@@ -123,7 +128,9 @@ class InterestPicture extends StatelessWidget {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return InterestWidget(interest: interest);
+          return BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: InterestWidget(interest: interest));
         });
   }
 
