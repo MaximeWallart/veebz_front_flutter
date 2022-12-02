@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:veebz_front_flutter/my_colors.dart';
+import 'package:veebz_front_flutter/views/profile_creation.dart';
 import 'package:veebz_front_flutter/views/profile_view.dart';
-import 'package:veebz_front_flutter/views/sign_up_view.dart';
+import 'package:veebz_front_flutter/views/account_sign_up_view.dart';
 import 'package:veebz_front_flutter/widgets/veebz_important_button_widget.dart';
 
+import '../data/spotify_connect.dart';
 import '../data/users.dart';
 
 class LoginView extends StatefulWidget {
@@ -21,16 +23,35 @@ class LoginView extends StatefulWidget {
 State<LoginView> createState() => _LoginViewState();
 
 class _LoginViewState extends State<LoginView> {
-  //Login function
-  Future<User?> loginUsingEmailPassword(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
+  late User? user;
+
+  @override
+  initState() {
+    initUser();
+    super.initState();
+  }
+
+  Future<void> initUser() async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
+          email: "XxJohnJohnDu59xX@gmail.com", password: "azerty1234");
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        // ignore: avoid_print
+        print("No user found for that email");
+      }
+    }
+  }
+
+  //Login function
+  Future<User?> loginUsingEmailPassword() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: widget._emailController.text,
+          password: widget._passwordController.text);
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
@@ -126,11 +147,7 @@ class _LoginViewState extends State<LoginView> {
                 VeebzImportantButton(
                     text: "Login",
                     onPressed: () async {
-                      User? user = await loginUsingEmailPassword(
-                          email: widget._emailController.text,
-                          password: widget._passwordController.text,
-                          context: context);
-                      // ignore: avoid_print
+                      User? user = await loginUsingEmailPassword();
                       print(user);
                       if (user != null) {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -152,9 +169,10 @@ class _LoginViewState extends State<LoginView> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
+          onPressed: () async {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ProfileView(user: Users.john)));
+                builder: (context) => ProfileCreationView(user: user)));
+            //ProfileView(user: Users.john)));
           },
           child: const Icon(Icons.account_box_rounded),
         ),

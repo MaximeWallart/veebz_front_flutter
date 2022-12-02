@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_stack/image_stack.dart';
@@ -205,9 +207,14 @@ class _ProfileViewState extends State<ProfileView> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return const Center(
-                        child: PostCreationWidget(),
-                      );
+                      return BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: Dialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
+                            backgroundColor: Colors.transparent,
+                            child: const PostCreationWidget(),
+                          ));
                     });
               }),
           SpeedDialChild(

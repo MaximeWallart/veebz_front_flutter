@@ -42,6 +42,11 @@ dependencies:
   # Firebase auth and firebase core
   firebase_core: ^1.22.0
   firebase_auth: ^3.8.0
+  spotify: ^0.8.0
+  spotify_sdk: ^2.3.0
+  flutter_dotenv: ^5.0.2
+  logger: ^1.1.0
+  material_design_icons_flutter: ^6.0.7096
 
 flutter_icons:
   image_path: "assets/images/Veebz_logo.png"
@@ -71,6 +76,7 @@ flutter:
 
   assets:
     - assets/images/Veebz_logo.png
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
